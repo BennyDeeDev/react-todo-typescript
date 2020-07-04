@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import ToDoList from "./pages/ToDoList";
 import { Switch, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
+import ToDoDetails from "./pages/ToDoDetails";
 
 function App() {
 	return (
@@ -13,6 +14,9 @@ function App() {
 				<Switch>
 					<Route exact path="/">
 						<ToDoList />
+					</Route>
+					<Route exact path="/todo/:id">
+						<ToDoDetails />
 					</Route>
 					<Route path="*">
 						<NotFound />

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// eslint-disable-next-line
 import ToDoItem from "../components/ToDoItem";
 import todo from "../models/todo";
 

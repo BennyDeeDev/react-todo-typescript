@@ -9,7 +9,6 @@ export default function ToDoList() {
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter") {
 			setTodo([{ id: todos.length, title, done: false }, ...todos]);
-			console.log(todos);
 		}
 	};
 
@@ -18,7 +17,6 @@ export default function ToDoList() {
 	};
 
 	const handleToggleToDo = (id: number) => {
-		console.log(id, "toggle");
 		let copyOfTodos = [...todos];
 		let indexOfToDo = copyOfTodos.findIndex((todo) => todo.id === id);
 		copyOfTodos[indexOfToDo] = {

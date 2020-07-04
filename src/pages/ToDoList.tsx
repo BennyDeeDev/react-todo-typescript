@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 // eslint-disable-next-line
-import ToDoItem, { todo } from "../components/ToDoItem";
+import ToDoItem from "../components/ToDoItem";
+import todo from "../models/todo";
 
 export default function ToDoList() {
-	const [todos, setTodo] = useState([] as any);
+	const [todos, setTodo] = useState([] as Array<todo>);
 	const [title, setTitle] = useState("");
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -29,11 +30,11 @@ export default function ToDoList() {
 		setTodo(copyOfTodos);
 	};
 
-	const activeToDos: any = () => {
+	const activeToDos: Function = () => {
 		return todos.filter((todo: todo) => !todo.done);
 	};
 
-	const doneToDos: any = () => {
+	const doneToDos: Function = () => {
 		return todos.filter((todo: todo) => todo.done);
 	};
 
@@ -49,13 +50,13 @@ export default function ToDoList() {
 				/>
 				<h2 className="text-3xl font-weight-200 mt-4">Active ToDos</h2>
 				{activeToDos().map((todo: todo, index: number) => (
-					<ToDoItem {...todo} key={index} onDeleteToDo={handleDeleteToDo} onToggleToDo={handleToggleToDo} />
+					<ToDoItem todo={todo} key={index} onDeleteToDo={handleDeleteToDo} onToggleToDo={handleToggleToDo} />
 				))}
 			</div>
 			<div className="mt-4">
 				<h2 className="text-3xl font-weight-200">Done ToDos</h2>
 				{doneToDos().map((todo: todo, index: number) => (
-					<ToDoItem {...todo} key={index} onDeleteToDo={handleDeleteToDo} onToggleToDo={handleToggleToDo} />
+					<ToDoItem todo={todo} key={index} onDeleteToDo={handleDeleteToDo} onToggleToDo={handleToggleToDo} />
 				))}
 			</div>
 		</React.Fragment>

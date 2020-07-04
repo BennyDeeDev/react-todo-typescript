@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../images/logo.svg";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
 	return (
@@ -10,9 +10,6 @@ export default function NavBar() {
 					<img src={logo} className="w-32" alt="logo" />
 				</Link>
 				<p className="text-2xl text-blue-900">React ToDo</p>
-				<Link to="/login">
-					<h1>Login</h1>
-				</Link>
 			</div>
 		</div>
 	);

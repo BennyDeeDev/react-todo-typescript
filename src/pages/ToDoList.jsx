@@ -2,17 +2,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import ToDoItem from "../components/ToDoItem";
 import IToDo from "../models/IToDo";
-import { ToDoContext, useThunkReducer, reducer, FETCH_TODOS } from "../context/ToDoContext";
-
-// @ts-ignore-file
+import { ToDoContext } from "../context/ToDoContext";
 
 export default function ToDoList() {
-	const [todos, dispatch] = useThunkReducer(reducer, []);
-	const { addToDo } = useContext(ToDoContext);
+	const { todos, addToDo, fetchToDos } = useContext(ToDoContext);
 	const [title, setTitle] = useState("");
 
 	useEffect(() => {
-		dispatch(FETCH_TODOS);
+		fetchToDos();
 	}, []);
 
 	const handleKeyDown = (e) => {

@@ -1,44 +1,5 @@
 import React, { useReducer, createContext } from "react";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-
-const apiClient = axios.create({
-	baseURL: `http://localhost:3000`,
-	withCredentials: false, // This is the default
-	headers: {
-		Accept: "application/json",
-		"Content-Type": "application/json",
-	},
-	timeout: 10000,
-});
-
-export const useThunkReducer = (reducer, initialState) => {
-	const [state, dispatch] = useReducer(reducer, initialState);
-
-	const enhancedDispatch = React.useCallback(
-		(action) => {
-			console.log(action);
-
-			if (typeof action === "function") {
-				action(dispatch);
-			} else {
-				dispatch(action);
-			}
-		},
-		[dispatch]
-	);
-
-	return [state, enhancedDispatch];
-};
-
-export const FETCH_TODOS = (dispatch) => {
-	return apiClient.get("/todos").then((Response) =>
-		dispatch({
-			type: "TODO_FETCH",
-			payload: [Response.data],
-		})
-	);
-};
+import ToDoService from "../services/ToDoService";
 
 export const ToDoContext = createContext();
 
@@ -50,14 +11,12 @@ const TODO_FETCH = "TODO_FETCH";
 
 export const reducer = (todos, action) => {
 	if (action.type === TODO_FETCH) {
-		console.log(todos, action.payload);
 		todos = action.payload;
 	}
 
 	if (action.type === TODO_ADD) {
 		return [
 			{
-				id: uuidv4(),
 				...action.payload,
 			},
 			...todos,
@@ -93,50 +52,69 @@ export const ToDoProvider = ({ children }) => {
 	const [todos, dispatch] = useReducer(reducer, []);
 
 	const fetchToDos = () => {
-		dispatch({
-			type: TODO_FETCH,
-			payload: {
-				todos,
-			},
-		});
+		return ToDoService.getToDos()
+			.then((Response) =>
+				dispatch({
+					type: TODO_FETCH,
+					payload: Response.data,
+				})
+			)
+			.catch((Error) => console.log(Error));
 	};
 
 	const addToDo = ({ title, done }) => {
-		dispatch({
-			type: TODO_ADD,
-			payload: {
-				title,
-				done,
-			},
-		});
+		return ToDoService.addToDo({ title, done })
+			.then(({ data }) => {
+				dispatch({
+					type: TODO_ADD,
+					payload: {
+						title,
+						done,
+					},
+				});
+			})
+			.catch((Error) => console.log(Error));
 	};
 
 	const deleteToDo = (id) => {
-		dispatch({
-			type: TODO_DELETE,
-			payload: {
-				id,
-			},
-		});
+		console.log(id);
+		ToDoService.deleteToDo(id)
+			.then(() => {
+				dispatch({
+					type: TODO_DELETE,
+					payload: {
+						id,
+					},
+				});
+			})
+			.catch((Error) => console.log(Error));
 	};
 
 	const toggleToDo = (id) => {
-		dispatch({
-			type: TODO_TOGGLE,
-			payload: {
-				id,
-			},
-		});
+		ToDoService.updateToDo(id, { done })
+			.then(() => {
+				dispatch({
+					type: TODO_TOGGLE,
+					payload: {
+						id,
+					},
+				});
+			})
+			.catch((Error) => console.log(Error));
 	};
 
 	const changeToDo = ({ id, title }) => {
-		dispatch({
-			type: TODO_CHANGE,
-			payload: {
-				id,
-				title,
-			},
-		});
+		ToDoService.updateToDo(id, { title })
+			.then(() => {
+				dispatch({
+					type: TODO_CHANGE,
+					payload: {
+						id,
+						title,
+					},
+				});
+			})
+			.catch((Error) => console.log(Error));
 	};
 
 	return (

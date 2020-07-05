@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import ToDoItem from "../components/ToDoItem";
-import todo from "../models/todo";
+import IToDo from "../models/IToDo";
 import { ToDoContext } from "../context/ToDoContext";
 
 export default function ToDoList() {
@@ -14,11 +14,11 @@ export default function ToDoList() {
 	};
 
 	const activeToDos: Function = () => {
-		return todos.filter((todo: todo) => !todo.done);
+		return todos.filter((todo: IToDo) => !todo.done);
 	};
 
 	const doneToDos: Function = () => {
-		return todos.filter((todo: todo) => todo.done);
+		return todos.filter((todo: IToDo) => todo.done);
 	};
 
 	//TODO: create Custom Hook for Input on KeyDown
@@ -33,13 +33,13 @@ export default function ToDoList() {
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 				/>
 				<h2 className="text-3xl font-weight-200 mt-4">Active ToDos</h2>
-				{activeToDos().map((todo: todo) => (
+				{activeToDos().map((todo: IToDo) => (
 					<ToDoItem {...todo} key={todo.id} />
 				))}
 			</div>
 			<div className="mt-4">
 				<h2 className="text-3xl font-weight-200">Done ToDos</h2>
-				{doneToDos().map((todo: todo) => (
+				{doneToDos().map((todo: IToDo) => (
 					<ToDoItem {...todo} key={todo.id} />
 				))}
 			</div>

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import todo from "../models/todo";
+import IToDo from "../models/IToDo";
 import { ToDoContext } from "../context/ToDoContext";
 import close from "../images/close.svg";
 import { Link } from "react-router-dom";
 
-export default function ToDoItem(todo: todo) {
+export default function ToDoItem(todo: IToDo) {
 	const { deleteToDo, toggleToDo } = useContext(ToDoContext);
 
 	const handleToggleToDo = (id: number) => {

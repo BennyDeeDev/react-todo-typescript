@@ -1,18 +1,28 @@
 import React, { useReducer, createContext } from "react";
-import id from "uuid/v4";
+import IToDo from "../models/IToDo";
+import { v4 as uuidv4 } from "uuid";
 
-export const ToDoContext = createContext();
+export interface IContextProps {
+	todos?: Array<IToDo>;
+	todo?: IToDo;
+	addToDo?: Function;
+	deleteToDo?: Function;
+	toggleToDo?: Function;
+	changeToDo?: Function;
+}
+
+export const ToDoContext = createContext<IContextProps>({});
 
 const TODO_ADD = "TODO_ADD";
 const TODO_DELETE = "TODO_DELETE";
 const TODO_TOGGLE = "TODO_TOGGLE";
 const TODO_CHANGE = "TODO_CHANGE";
 
-const reducer = (todos = [], action) => {
+const reducer = (todos: Array<IToDo> = [], action: any) => {
 	if (action.type === TODO_ADD) {
 		return [
 			{
-				id: id(),
+				id: uuidv4(),
 				...action.payload,
 			},
 			...todos,
@@ -44,10 +54,10 @@ const reducer = (todos = [], action) => {
 	return todos;
 };
 
-export const ToDoProvider = ({ children }) => {
+export const ToDoProvider = ({ children }: any) => {
 	const [todos, dispatch] = useReducer(reducer, []);
 
-	const addToDo = ({ title, done }) => {
+	const addToDo = ({ title, done }: IToDo) => {
 		dispatch({
 			type: TODO_ADD,
 			payload: {
@@ -57,7 +67,7 @@ export const ToDoProvider = ({ children }) => {
 		});
 	};
 
-	const deleteToDo = (id) => {
+	const deleteToDo = (id: IToDo) => {
 		dispatch({
 			type: TODO_DELETE,
 			payload: {
@@ -66,7 +76,7 @@ export const ToDoProvider = ({ children }) => {
 		});
 	};
 
-	const toggleToDo = (id) => {
+	const toggleToDo = (id: IToDo) => {
 		dispatch({
 			type: TODO_TOGGLE,
 			payload: {
@@ -75,7 +85,7 @@ export const ToDoProvider = ({ children }) => {
 		});
 	};
 
-	const changeToDo = ({ id, title }) => {
+	const changeToDo = ({ id, title }: IToDo) => {
 		dispatch({
 			type: TODO_CHANGE,
 			payload: {

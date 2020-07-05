@@ -4,31 +4,14 @@ import todo from "../models/todo";
 import { ToDoContext } from "../context/ToDoContext";
 
 export default function ToDoList() {
-	const { addToDo, todos } = useContext(ToDoContext);
-	/* 	const [todos, setTodo] = useState([] as Array<todo>); */
+	const { todos, addToDo } = useContext(ToDoContext);
 	const [title, setTitle] = useState("");
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter") {
-			/* setTodo([{ id: todos.length, title, done: false }, ...todos]); */
 			addToDo({ title, done: false });
 		}
 	};
-
-	/* 	const handleDeleteToDo = (id: number) => {
-		setTodo(todos.filter((todo: todo) => todo.id !== id));
-	}; */
-
-	/* 	const handleToggleToDo = (id: number) => {
-		let copyOfTodos = [...todos];
-		let indexOfToDo = copyOfTodos.findIndex((todo) => todo.id === id);
-		copyOfTodos[indexOfToDo] = {
-			...copyOfTodos[indexOfToDo],
-			done: !copyOfTodos[indexOfToDo].done,
-		};
-
-		setTodo(copyOfTodos);
-	}; */
 
 	const activeToDos: Function = () => {
 		return todos.filter((todo: todo) => !todo.done);
@@ -50,14 +33,14 @@ export default function ToDoList() {
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 				/>
 				<h2 className="text-3xl font-weight-200 mt-4">Active ToDos</h2>
-				{activeToDos().map((todo: todo, index: number) => (
-					<ToDoItem todo={todo} key={index} />
+				{activeToDos().map((todo: todo) => (
+					<ToDoItem {...todo} key={todo.id} />
 				))}
 			</div>
 			<div className="mt-4">
 				<h2 className="text-3xl font-weight-200">Done ToDos</h2>
-				{doneToDos().map((todo: todo, index: number) => (
-					<ToDoItem todo={todo} key={index} />
+				{doneToDos().map((todo: todo) => (
+					<ToDoItem {...todo} key={todo.id} />
 				))}
 			</div>
 		</React.Fragment>

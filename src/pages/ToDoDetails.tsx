@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { ToDoContext } from "../context/ToDoContext";
 
 export default function ToDoDetails() {
+	const { changeToDo } = useContext(ToDoContext);
 	let { id } = useParams();
 	const [title, setTitle] = useState("");
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter") {
-			//Redux Logic
+			changeToDo({ id, title });
 		}
 	};
 

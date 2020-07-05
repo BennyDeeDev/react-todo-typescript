@@ -5,13 +5,16 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./tailwind.generated.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ToDoProvider } from "./context/ToDoContext";
 
 ReactDOM.render(
-	<Router>
-		<React.StrictMode>
-			<App />
-		</React.StrictMode>
-	</Router>,
+	<React.StrictMode>
+		<Router>
+			<ToDoProvider>
+				<App />
+			</ToDoProvider>
+		</Router>
+	</React.StrictMode>,
 	document.getElementById("root")
 );
 

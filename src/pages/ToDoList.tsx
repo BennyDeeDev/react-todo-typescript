@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ToDoItem from "../components/ToDoItem";
 import todo from "../models/todo";
+import { ToDoContext } from "../context/ToDoContext";
 
 export default function ToDoList() {
-	const [todos, setTodo] = useState([] as Array<todo>);
+	const { addToDo, todos } = useContext(ToDoContext);
+	/* 	const [todos, setTodo] = useState([] as Array<todo>); */
 	const [title, setTitle] = useState("");
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter") {
-			setTodo([{ id: todos.length, title, done: false }, ...todos]);
+			/* setTodo([{ id: todos.length, title, done: false }, ...todos]); */
+			addToDo({ title, done: false });
 		}
 	};
 
-	const handleDeleteToDo = (id: number) => {
+	/* 	const handleDeleteToDo = (id: number) => {
 		setTodo(todos.filter((todo: todo) => todo.id !== id));
-	};
+	}; */
 
-	const handleToggleToDo = (id: number) => {
+	/* 	const handleToggleToDo = (id: number) => {
 		let copyOfTodos = [...todos];
 		let indexOfToDo = copyOfTodos.findIndex((todo) => todo.id === id);
 		copyOfTodos[indexOfToDo] = {
@@ -25,7 +28,7 @@ export default function ToDoList() {
 		};
 
 		setTodo(copyOfTodos);
-	};
+	}; */
 
 	const activeToDos: Function = () => {
 		return todos.filter((todo: todo) => !todo.done);
@@ -35,6 +38,7 @@ export default function ToDoList() {
 		return todos.filter((todo: todo) => todo.done);
 	};
 
+	//TODO: create Custom Hook for Input on KeyDown
 	return (
 		<React.Fragment>
 			<div className="">
@@ -47,13 +51,13 @@ export default function ToDoList() {
 				/>
 				<h2 className="text-3xl font-weight-200 mt-4">Active ToDos</h2>
 				{activeToDos().map((todo: todo, index: number) => (
-					<ToDoItem todo={todo} key={index} onDeleteToDo={handleDeleteToDo} onToggleToDo={handleToggleToDo} />
+					<ToDoItem todo={todo} key={index} />
 				))}
 			</div>
 			<div className="mt-4">
 				<h2 className="text-3xl font-weight-200">Done ToDos</h2>
 				{doneToDos().map((todo: todo, index: number) => (
-					<ToDoItem todo={todo} key={index} onDeleteToDo={handleDeleteToDo} onToggleToDo={handleToggleToDo} />
+					<ToDoItem todo={todo} key={index} />
 				))}
 			</div>
 		</React.Fragment>

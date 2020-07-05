@@ -2,16 +2,18 @@ import React, { useReducer, createContext } from "react";
 import IToDo from "../models/IToDo";
 import { v4 as uuidv4 } from "uuid";
 
-export interface IContextProps {
-	todos?: Array<IToDo>;
-	todo?: IToDo;
+interface IContextProps {
+	todos: Array<IToDo>;
+	todo: IToDo;
 	addToDo?: Function;
 	deleteToDo?: Function;
 	toggleToDo?: Function;
 	changeToDo?: Function;
 }
 
-export const ToDoContext = createContext<IContextProps>({});
+const initialState: Array<IToDo> = [{ id: 1, title: "TypeScript lernen", done: false }];
+
+export const ToDoContext = createContext<IContextProps>(initialState);
 
 const TODO_ADD = "TODO_ADD";
 const TODO_DELETE = "TODO_DELETE";

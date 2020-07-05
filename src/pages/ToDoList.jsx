@@ -1,24 +1,32 @@
-import React, { useState, useContext } from "react";
+/* eslint-disable */
+import React, { useState, useContext, useEffect } from "react";
 import ToDoItem from "../components/ToDoItem";
 import IToDo from "../models/IToDo";
-import { ToDoContext } from "../context/ToDoContext";
+import { ToDoContext, useThunkReducer, reducer, FETCH_TODOS } from "../context/ToDoContext";
+
+// @ts-ignore-file
 
 export default function ToDoList() {
-	const { todos, addToDo } = useContext(ToDoContext);
+	const [todos, dispatch] = useThunkReducer(reducer, []);
+	const { addToDo } = useContext(ToDoContext);
 	const [title, setTitle] = useState("");
 
-	const handleKeyDown = (e: React.KeyboardEvent) => {
+	useEffect(() => {
+		dispatch(FETCH_TODOS);
+	}, []);
+
+	const handleKeyDown = (e) => {
 		if (e.key === "Enter") {
 			addToDo({ title, done: false });
 		}
 	};
 
-	const activeToDos: Function = () => {
-		return todos.filter((todo: IToDo) => !todo.done);
+	const activeToDos = () => {
+		return todos.filter((todo) => !todo.done);
 	};
 
-	const doneToDos: Function = () => {
-		return todos.filter((todo: IToDo) => todo.done);
+	const doneToDos = () => {
+		return todos.filter((todo) => todo.done);
 	};
 
 	//TODO: create Custom Hook for Input on KeyDown
@@ -29,17 +37,17 @@ export default function ToDoList() {
 					className="w-full rounded-full shadow-sm border border-reactblue"
 					placeholder="Add ToDo here"
 					value={title}
-					onKeyDown={(e: React.KeyboardEvent) => handleKeyDown(e)}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+					onKeyDown={(e) => handleKeyDown(e)}
+					onChange={(e) => setTitle(e.target.value)}
 				/>
 				<h2 className="text-3xl font-weight-200 mt-4">Active ToDos</h2>
-				{activeToDos().map((todo: IToDo) => (
+				{activeToDos().map((todo) => (
 					<ToDoItem {...todo} key={todo.id} />
 				))}
 			</div>
 			<div className="mt-4">
 				<h2 className="text-3xl font-weight-200">Done ToDos</h2>
-				{doneToDos().map((todo: IToDo) => (
+				{doneToDos().map((todo) => (
 					<ToDoItem {...todo} key={todo.id} />
 				))}
 			</div>

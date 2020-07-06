@@ -7,7 +7,6 @@ export default function ToDoList({ addToDo, todos, fetchToDos }) {
 	const [title, setTitle] = useState("");
 
 	useEffect(() => {
-		console.log(fetchToDos());
 		fetchToDos();
 	}, []);
 

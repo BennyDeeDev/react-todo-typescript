@@ -7,12 +7,12 @@ import "./tailwind.generated.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createStore, applyMiddleware } from "redux";
 import { ToDoProvider } from "./context/ToDoContext";
-import { composeWithDevTools } from "redux-devtools";
+import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import { reducer } from "./context/ToDoContext";
 import thunk from "redux-thunk";
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render(
 	<React.StrictMode>

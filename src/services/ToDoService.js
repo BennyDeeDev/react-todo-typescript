@@ -13,7 +13,7 @@ const apiClient = axios.create({
 const PATH = "/todos";
 
 export default {
-	getToDos() {
+	fetchToDos() {
 		return apiClient.get(PATH);
 	},
 	addToDo(todo) {

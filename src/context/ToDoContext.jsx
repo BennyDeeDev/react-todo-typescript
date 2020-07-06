@@ -27,6 +27,7 @@ export const reducer = (todos, action) => {
 		return todos.filter((todo) => todo.id !== action.payload.id);
 	}
 
+	//? Refactor? Dont want to mess up with the order!
 	if (action.type === TODO_TOGGLE) {
 		return todos.map((todo) => {
 			if (todo.id === action.payload.id) {
@@ -52,13 +53,13 @@ export const ToDoProvider = ({ children }) => {
 	const [todos, dispatch] = useReducer(reducer, []);
 
 	const fetchToDos = () => {
-		return ToDoService.getToDos()
-			.then((Response) =>
+		return ToDoService.fetchToDos()
+			.then(({ data }) => {
 				dispatch({
 					type: TODO_FETCH,
-					payload: Response.data,
-				})
-			)
+					payload: data,
+				});
+			})
 			.catch((Error) => console.log(Error));
 	};
 
@@ -68,8 +69,9 @@ export const ToDoProvider = ({ children }) => {
 				dispatch({
 					type: TODO_ADD,
 					payload: {
-						title,
-						done,
+						id: data.id,
+						title: data.title,
+						done: data.done,
 					},
 				});
 			})
@@ -78,7 +80,7 @@ export const ToDoProvider = ({ children }) => {
 
 	const deleteToDo = (id) => {
 		console.log(id);
-		ToDoService.deleteToDo(id)
+		return ToDoService.deleteToDo(id)
 			.then(() => {
 				dispatch({
 					type: TODO_DELETE,
@@ -91,12 +93,14 @@ export const ToDoProvider = ({ children }) => {
 	};
 
 	const toggleToDo = (id) => {
-		ToDoService.updateToDo(id, { done })
-			.then(() => {
+		const todo = todos.find((todo) => todo.id === id);
+		return ToDoService.updateToDo(id, { done: !todo.done })
+			.then(({ data }) => {
 				dispatch({
 					type: TODO_TOGGLE,
 					payload: {
-						id,
+						id: data.id,
+						done: data.done,
 					},
 				});
 			})
@@ -104,13 +108,13 @@ export const ToDoProvider = ({ children }) => {
 	};
 
 	const changeToDo = ({ id, title }) => {
-		ToDoService.updateToDo(id, { title })
-			.then(() => {
+		return ToDoService.updateToDo(id, { title })
+			.then(({ data }) => {
 				dispatch({
 					type: TODO_CHANGE,
 					payload: {
-						id,
-						title,
+						id: data.id,
+						title: data.title,
 					},
 				});
 			})

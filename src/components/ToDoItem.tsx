@@ -22,7 +22,12 @@ export default function ToDoItem(todo: IToDo) {
 				<div className="ml-4">{todo.title}</div>
 			</Link>
 			<button className="ml-auto">
-				<img className="w-4 pb-1 opacity-50" src={close} alt="" onClick={() => handleDeleteToDo(todo.id)} />
+				<img
+					className="w-4 pb-1 opacity-50 hover:opacity-100 transition ease-in duration-100"
+					src={close}
+					alt=""
+					onClick={() => handleDeleteToDo(todo.id)}
+				/>
 			</button>
 		</div>
 	);

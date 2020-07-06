@@ -4,17 +4,18 @@ import ToDoItem from "../components/ToDoItem";
 import IToDo from "../models/IToDo";
 import { ToDoContext } from "../context/ToDoContext";
 
-export default function ToDoList() {
-	const { todos, addToDo, fetchToDos } = useContext(ToDoContext);
+export default function ToDoList({ addToDo, todos }) {
+	const { fetchToDos } = useContext(ToDoContext);
 	const [title, setTitle] = useState("");
 
 	useEffect(() => {
 		fetchToDos();
 	}, []);
 
+	//TODO: create Custom Hook for Input on KeyDown
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") {
-			addToDo({ title, done: false });
+			addToDo(title, false);
 		}
 	};
 
@@ -26,7 +27,6 @@ export default function ToDoList() {
 		return todos.filter((todo) => todo.done);
 	};
 
-	//TODO: create Custom Hook for Input on KeyDown
 	return (
 		<React.Fragment>
 			<div className="">

@@ -9,16 +9,19 @@ const TODO_TOGGLE = "TODO_TOGGLE";
 const TODO_CHANGE = "TODO_CHANGE";
 const TODO_FETCH = "TODO_FETCH";
 
-export const reducer = (todos, action) => {
+export const reducer = (todos = [], action) => {
 	if (action.type === TODO_FETCH) {
 		todos = action.payload;
 	}
 
 	if (action.type === TODO_ADD) {
+		console.log(action.payload);
+		console.log(todos);
 		return [
 			{
 				...action.payload,
 			},
+
 			...todos,
 		];
 	}
@@ -79,7 +82,6 @@ export const ToDoProvider = ({ children }) => {
 	};
 
 	const deleteToDo = (id) => {
-		console.log(id);
 		return ToDoService.deleteToDo(id)
 			.then(() => {
 				dispatch({
@@ -122,7 +124,7 @@ export const ToDoProvider = ({ children }) => {
 	};
 
 	return (
-		<ToDoContext.Provider value={{ todos, fetchToDos, addToDo, deleteToDo, toggleToDo, changeToDo }}>
+		<ToDoContext.Provider value={{ todos, fetchToDos, deleteToDo, toggleToDo, changeToDo }}>
 			{children}
 		</ToDoContext.Provider>
 	);

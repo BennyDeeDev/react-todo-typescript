@@ -6,13 +6,23 @@ import * as serviceWorker from "./serviceWorker";
 import "./tailwind.generated.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToDoProvider } from "./context/ToDoContext";
+import { composeWithDevTools } from "redux-devtools";
+
+import { Provider } from "react-redux";
+
+import { createStore } from "redux";
+import { reducer } from "./context/ToDoContext";
+
+const store = createStore(reducer);
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Router>
-			<ToDoProvider>
-				<App />
-			</ToDoProvider>
+			<Provider store={store}>
+				<ToDoProvider>
+					<App />
+				</ToDoProvider>
+			</Provider>
 		</Router>
 	</React.StrictMode>,
 	document.getElementById("root")

@@ -4,6 +4,7 @@ import ToDoList from "./pages/ToDoList";
 import { Switch, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import ToDoDetails from "./pages/ToDoDetails";
+import ToDoListContainer from "./containers/ToDoListContainer";
 
 function App() {
 	return (
@@ -13,7 +14,7 @@ function App() {
 			<div className="mx-auto max-w-xl px-4 py-8">
 				<Switch>
 					<Route exact path="/">
-						<ToDoList />
+						<ToDoListContainer />
 					</Route>
 					<Route exact path="/todo/:id">
 						<ToDoDetails />

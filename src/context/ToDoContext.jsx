@@ -1,67 +1,8 @@
 import React, { useReducer, createContext } from "react";
 import ToDoService from "../services/ToDoService";
+import { reducer } from "../reducers/todo-reducer";
 
 export const ToDoContext = createContext();
-
-const TODO_ADD = "TODO_ADD";
-const TODO_DELETE = "TODO_DELETE";
-const TODO_TOGGLE = "TODO_TOGGLE";
-const TODO_CHANGE = "TODO_CHANGE";
-const TODO_FETCH = "TODO_FETCH";
-
-export const reducer = (todos = [], action) => {
-	if (action.type === TODO_FETCH) {
-		console.log(action.payload);
-		todos = action.payload;
-	}
-
-	if (action.type === TODO_ADD) {
-		if (action.payload.id) {
-			return [
-				{
-					...action.payload,
-				},
-
-				...todos,
-			];
-		} else {
-			return [
-				{
-					id: Date.now(),
-					...action.payload,
-				},
-
-				...todos,
-			];
-		}
-	}
-
-	if (action.type === TODO_DELETE) {
-		return todos.filter((todo) => todo.id !== action.payload.id);
-	}
-
-	//? Refactor? Dont want to mess up with the order!
-	if (action.type === TODO_TOGGLE) {
-		return todos.map((todo) => {
-			if (todo.id === action.payload.id) {
-				return { ...todo, done: !todo.done };
-			}
-			return todo;
-		});
-	}
-
-	if (action.type === TODO_CHANGE) {
-		console.log(todos);
-		return todos.map((todo) => {
-			if (todo.id === action.payload.id) {
-				return { ...todo, title: action.payload.title };
-			}
-			return todo;
-		});
-	}
-
-	return todos;
-};
 
 export const ToDoProvider = ({ children }) => {
 	const [todos, dispatch] = useReducer(reducer, []);
@@ -70,7 +11,7 @@ export const ToDoProvider = ({ children }) => {
 		return ToDoService.fetchToDos()
 			.then(({ data }) => {
 				dispatch({
-					type: TODO_FETCH,
+					type: "TODO_FETCH",
 					payload: data,
 				});
 			})
@@ -81,7 +22,7 @@ export const ToDoProvider = ({ children }) => {
 		return ToDoService.addToDo({ title, done })
 			.then(({ data }) => {
 				dispatch({
-					type: TODO_ADD,
+					type: "TODO_ADD",
 					payload: {
 						id: data.id,
 						title: data.title,
@@ -96,7 +37,7 @@ export const ToDoProvider = ({ children }) => {
 		return ToDoService.deleteToDo(id)
 			.then(() => {
 				dispatch({
-					type: TODO_DELETE,
+					type: "TODO_DELETE",
 					payload: {
 						id,
 					},
@@ -110,7 +51,7 @@ export const ToDoProvider = ({ children }) => {
 		return ToDoService.updateToDo(id, { done: !todo.done })
 			.then(({ data }) => {
 				dispatch({
-					type: TODO_TOGGLE,
+					type: "TODO_TOGGLE",
 					payload: {
 						id: data.id,
 						done: data.done,
@@ -124,7 +65,7 @@ export const ToDoProvider = ({ children }) => {
 		return ToDoService.updateToDo(id, { title })
 			.then(({ data }) => {
 				dispatch({
-					type: TODO_CHANGE,
+					type: "TODO_CHANGE",
 					payload: {
 						id: data.id,
 						title: data.title,

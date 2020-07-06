@@ -1,11 +1,4 @@
 import ToDoService from "../services/ToDoService";
-import { get } from "http";
-
-const TODO_ADD = "TODO_ADD";
-const TODO_DELETE = "TODO_DELETE";
-const TODO_TOGGLE = "TODO_TOGGLE";
-const TODO_CHANGE = "TODO_CHANGE";
-const TODO_FETCH = "TODO_FETCH";
 
 //TODO: Error Handling
 export const fetchToDos = () => {
@@ -13,7 +6,7 @@ export const fetchToDos = () => {
 		ToDoService.fetchToDos()
 			.then(({ data }) => {
 				dispatch({
-					type: TODO_FETCH,
+					type: "TODO_FETCH",
 					payload: data,
 				});
 			})
@@ -26,7 +19,7 @@ export const addToDo = ({ title, done }) => {
 		ToDoService.addToDo({ title, done })
 			.then(({ data }) => {
 				dispatch({
-					type: TODO_ADD,
+					type: "TODO_ADD",
 					payload: {
 						id: data.id,
 						title: data.title,
@@ -43,7 +36,7 @@ export const deleteToDo = (id) => {
 		ToDoService.deleteToDo(id)
 			.then(() => {
 				dispatch({
-					type: TODO_DELETE,
+					type: "TODO_DELETE",
 					payload: {
 						id,
 					},
@@ -59,7 +52,7 @@ export const toggleToDo = (id) => {
 		return ToDoService.updateToDo(id, { done: !todo.done })
 			.then(({ data }) => {
 				dispatch({
-					type: TODO_TOGGLE,
+					type: "TODO_TOGGLE",
 					payload: {
 						id: data.id,
 						done: data.done,
@@ -75,7 +68,7 @@ export const changeToDo = ({ id, title }) => {
 		ToDoService.updateToDo(id, { title })
 			.then(({ data }) => {
 				dispatch({
-					type: TODO_CHANGE,
+					type: "TODO_CHANGE",
 					payload: {
 						id: data.id,
 						title: data.title,

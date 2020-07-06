@@ -9,8 +9,8 @@ import { createStore, applyMiddleware } from "redux";
 import { ToDoProvider } from "./context/ToDoContext";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
-import { reducer } from "./context/ToDoContext";
 import thunk from "redux-thunk";
+import { reducer } from "./reducers/todo-reducer";
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 

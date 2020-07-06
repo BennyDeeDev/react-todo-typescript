@@ -19,9 +19,7 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Router>
 			<Provider store={store}>
-				<ToDoProvider>
-					<App />
-				</ToDoProvider>
+				<App />
 			</Provider>
 		</Router>
 	</React.StrictMode>,

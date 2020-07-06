@@ -15,15 +15,24 @@ export const reducer = (todos = [], action) => {
 	}
 
 	if (action.type === TODO_ADD) {
-		console.log(action.payload);
-		console.log(todos);
-		return [
-			{
-				...action.payload,
-			},
+		if (action.payload.id) {
+			return [
+				{
+					...action.payload,
+				},
 
-			...todos,
-		];
+				...todos,
+			];
+		} else {
+			return [
+				{
+					id: Date.now(),
+					...action.payload,
+				},
+
+				...todos,
+			];
+		}
 	}
 
 	if (action.type === TODO_DELETE) {
@@ -41,6 +50,7 @@ export const reducer = (todos = [], action) => {
 	}
 
 	if (action.type === TODO_CHANGE) {
+		console.log(todos);
 		return todos.map((todo) => {
 			if (todo.id === action.payload.id) {
 				return { ...todo, title: action.payload.title };
@@ -124,7 +134,7 @@ export const ToDoProvider = ({ children }) => {
 	};
 
 	return (
-		<ToDoContext.Provider value={{ todos, fetchToDos, deleteToDo, toggleToDo, changeToDo }}>
+		<ToDoContext.Provider value={{ todos, fetchToDos, deleteToDo, addToDo, toggleToDo, changeToDo }}>
 			{children}
 		</ToDoContext.Provider>
 	);

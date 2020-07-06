@@ -1,10 +1,9 @@
 import React from "react";
 import NavBar from "./components/NavBar";
-import ToDoList from "./pages/ToDoList";
 import { Switch, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
-import ToDoDetails from "./pages/ToDoDetails";
 import ToDoListContainer from "./containers/ToDoListContainer";
+import ToDoDetailsContainer from "./containers/ToDoDetailsContainer";
 
 function App() {
 	return (
@@ -17,7 +16,7 @@ function App() {
 						<ToDoListContainer />
 					</Route>
 					<Route exact path="/todo/:id">
-						<ToDoDetails />
+						<ToDoDetailsContainer />
 					</Route>
 					<Route path="*">
 						<NotFound />

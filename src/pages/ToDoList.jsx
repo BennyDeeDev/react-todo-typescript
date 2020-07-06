@@ -1,21 +1,19 @@
 /* eslint-disable */
 import React, { useState, useContext, useEffect } from "react";
-import ToDoItem from "../components/ToDoItem";
 import IToDo from "../models/IToDo";
-import { ToDoContext } from "../context/ToDoContext";
+import ToDoItemContainer from "../containers/ToDoItemContainer";
 
-export default function ToDoList({ addToDo, todos }) {
-	const { fetchToDos } = useContext(ToDoContext);
+export default function ToDoList({ addToDo, todos, fetchToDos }) {
 	const [title, setTitle] = useState("");
 
-	useEffect(() => {
+	/* useEffect(() => {
 		fetchToDos();
-	}, []);
+	}, []); */
 
 	//TODO: create Custom Hook for Input on KeyDown
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") {
-			addToDo(title, false);
+			addToDo({ title, done: false });
 		}
 	};
 
@@ -38,14 +36,14 @@ export default function ToDoList({ addToDo, todos }) {
 					onChange={(e) => setTitle(e.target.value)}
 				/>
 				<h2 className="text-3xl font-weight-200 mt-4">Active ToDos</h2>
-				{activeToDos().map((todo) => (
-					<ToDoItem {...todo} key={todo.id} />
+				{activeToDos().map((todo, index) => (
+					<ToDoItemContainer todo={todo} key={index} />
 				))}
 			</div>
 			<div className="mt-4">
 				<h2 className="text-3xl font-weight-200">Done ToDos</h2>
-				{doneToDos().map((todo) => (
-					<ToDoItem {...todo} key={todo.id} />
+				{doneToDos().map((todo, index) => (
+					<ToDoItemContainer todo={todo} key={index} />
 				))}
 			</div>
 		</React.Fragment>

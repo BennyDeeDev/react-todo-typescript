@@ -1,20 +1,18 @@
 import React, { useContext } from "react";
 import IToDo from "../models/IToDo";
-import { ToDoContext } from "../context/ToDoContext";
 import close from "../images/close.svg";
 import { Link } from "react-router-dom";
 
-export default function ToDoItem(todo: IToDo) {
-	const { deleteToDo, toggleToDo } = useContext(ToDoContext);
-
-	const handleToggleToDo = (id: number) => {
+export default function ToDoItem({ todo, deleteToDo, toggleToDo }) {
+	const handleToggleToDo = (id) => {
 		toggleToDo(id);
 	};
 
-	const handleDeleteToDo = (id: number) => {
+	const handleDeleteToDo = (id) => {
 		deleteToDo(id);
 	};
-
+	console.log(todo);
+	console.log(todo.title);
 	return (
 		<div className="mt-4 flex items-center w-full rounded-full p-4 bg-white">
 			<input type="checkbox" checked={todo.done} onChange={() => handleToggleToDo(todo.id)} />

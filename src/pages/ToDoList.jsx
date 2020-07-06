@@ -6,9 +6,10 @@ import ToDoItemContainer from "../containers/ToDoItemContainer";
 export default function ToDoList({ addToDo, todos, fetchToDos }) {
 	const [title, setTitle] = useState("");
 
-	/* useEffect(() => {
+	useEffect(() => {
+		console.log(fetchToDos());
 		fetchToDos();
-	}, []); */
+	}, []);
 
 	//TODO: create Custom Hook for Input on KeyDown
 	const handleKeyDown = (e) => {

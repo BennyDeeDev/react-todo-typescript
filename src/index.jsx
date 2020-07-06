@@ -5,15 +5,14 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "./tailwind.generated.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import { createStore, applyMiddleware } from "redux";
 import { ToDoProvider } from "./context/ToDoContext";
 import { composeWithDevTools } from "redux-devtools";
-
 import { Provider } from "react-redux";
-
-import { createStore } from "redux";
 import { reducer } from "./context/ToDoContext";
+import thunk from "redux-thunk";
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
 	<React.StrictMode>

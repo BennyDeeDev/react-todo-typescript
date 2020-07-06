@@ -11,6 +11,7 @@ const TODO_FETCH = "TODO_FETCH";
 
 export const reducer = (todos = [], action) => {
 	if (action.type === TODO_FETCH) {
+		console.log(action.payload);
 		todos = action.payload;
 	}
 

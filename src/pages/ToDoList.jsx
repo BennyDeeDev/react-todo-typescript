@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import IToDo from "../models/IToDo";
 import ToDoItemContainer from "../containers/ToDoItemContainer";
 

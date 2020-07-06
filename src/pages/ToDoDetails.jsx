@@ -6,6 +6,7 @@ export default function ToDoDetails({ changeToDo }) {
 	const [title, setTitle] = useState("");
 	const history = useHistory();
 
+	//TODO: load title in input
 	//Redux Store does not persist Data on relaoads ._.
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") {

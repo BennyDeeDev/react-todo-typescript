@@ -11,8 +11,7 @@ export default function ToDoItem({ todo, deleteToDo, toggleToDo }) {
 	const handleDeleteToDo = (id) => {
 		deleteToDo(id);
 	};
-	console.log(todo);
-	console.log(todo.title);
+
 	return (
 		<div className="mt-4 flex items-center w-full rounded-full p-4 bg-white">
 			<input type="checkbox" checked={todo.done} onChange={() => handleToggleToDo(todo.id)} />

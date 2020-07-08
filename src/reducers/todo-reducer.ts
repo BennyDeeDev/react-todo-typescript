@@ -1,4 +1,5 @@
 //action.type always STRING !!!
+
 export const reducer = (todos = [], action) => {
 	if (action.type === "TODO_FETCH") {
 		todos = action.payload;

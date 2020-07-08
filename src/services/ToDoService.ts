@@ -12,17 +12,23 @@ const apiClient = axios.create({
 
 const PATH = "/todos";
 
+interface IToDo {
+	id?: number;
+	title?: string;
+	done?: boolean;
+}
+
 export default {
 	fetchToDos() {
 		return apiClient.get(PATH);
 	},
-	addToDo(todo) {
+	addToDo(todo: IToDo) {
 		return apiClient.post(PATH, { title: todo.title, done: todo.done });
 	},
-	deleteToDo(id) {
+	deleteToDo(id: number) {
 		return apiClient.delete(`${PATH}/${id}`);
 	},
-	updateToDo(id, payload) {
+	updateToDo(id: number, payload: IToDo) {
 		return apiClient.patch(`${PATH}/${id}`, payload);
 	},
 };

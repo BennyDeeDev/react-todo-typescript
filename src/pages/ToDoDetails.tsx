@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-export default function ToDoDetails({ changeToDo }) {
+interface IProps {
+	changeToDo: Function;
+}
+
+export default function ToDoDetails({ changeToDo }: IProps) {
 	let { id } = useParams();
 	const [title, setTitle] = useState("");
 	const history = useHistory();
 
 	//TODO: load title in input
 	//Redux Store does not persist Data on relaoads ._.
-	const handleKeyDown = (e) => {
+	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter") {
 			changeToDo({ id, title });
 			history.push("/");

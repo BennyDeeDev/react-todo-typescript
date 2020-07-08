@@ -1,9 +1,11 @@
 import ToDoService from "../services/ToDoService";
+import { Dispatch } from "redux";
+import IToDo from "../models/IToDo";
 
 //TODO: Error Handling
 export const fetchToDos = () => {
-	return (dispatch) => {
-		ToDoService.fetchToDos()
+	return async (dispatch: Dispatch) => {
+		return ToDoService.fetchToDos()
 			.then(({ data }) => {
 				dispatch({
 					type: "TODO_FETCH",
@@ -14,9 +16,9 @@ export const fetchToDos = () => {
 	};
 };
 
-export const addToDo = ({ title, done }) => {
-	return (dispatch) => {
-		ToDoService.addToDo({ title, done })
+export const addToDo = ({ title, done }: IToDo) => {
+	return async (dispatch: Dispatch) => {
+		return ToDoService.addToDo({ title, done })
 			.then(({ data }) => {
 				dispatch({
 					type: "TODO_ADD",
@@ -31,9 +33,9 @@ export const addToDo = ({ title, done }) => {
 	};
 };
 
-export const deleteToDo = (id) => {
-	return (dispatch) => {
-		ToDoService.deleteToDo(id)
+export const deleteToDo = (id: number) => {
+	return async (dispatch: Dispatch) => {
+		return ToDoService.deleteToDo(id)
 			.then(() => {
 				dispatch({
 					type: "TODO_DELETE",
@@ -46,9 +48,9 @@ export const deleteToDo = (id) => {
 	};
 };
 
-export const toggleToDo = (id) => {
-	return (dispatch, getState) => {
-		const todo = getState().find((todo) => todo.id === id);
+export const toggleToDo = (id: number) => {
+	return async (dispatch: Dispatch, getState: any) => {
+		const todo = getState().find((todo: IToDo) => todo.id === id);
 		return ToDoService.updateToDo(id, { done: !todo.done })
 			.then(({ data }) => {
 				dispatch({
@@ -63,9 +65,9 @@ export const toggleToDo = (id) => {
 	};
 };
 
-export const changeToDo = ({ id, title }) => {
-	return (dispatch) => {
-		ToDoService.updateToDo(id, { title })
+export const changeToDo = ({ id, title }: IToDo) => {
+	return async (dispatch: Dispatch) => {
+		return ToDoService.updateToDo(id, { title })
 			.then(({ data }) => {
 				dispatch({
 					type: "TODO_CHANGE",

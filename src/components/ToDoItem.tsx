@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
-import IToDo from "../models/IToDo";
+import React from "react";
 import close from "../images/close.svg";
 import { Link } from "react-router-dom";
+import IToDo from "../models/IToDo";
 
-export default function ToDoItem({ todo, deleteToDo, toggleToDo }) {
-	const handleToggleToDo = (id) => {
+interface IProps {
+	todo: IToDo;
+	deleteToDo: Function;
+	toggleToDo: Function;
+}
+
+export default function ToDoItem({ todo, deleteToDo, toggleToDo }: IProps) {
+	const handleToggleToDo = (id: number) => {
 		toggleToDo(id);
 	};
 
-	const handleDeleteToDo = (id) => {
+	const handleDeleteToDo = (id: number) => {
 		deleteToDo(id);
 	};
 

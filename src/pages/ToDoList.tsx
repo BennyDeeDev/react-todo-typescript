@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import ToDoItemContainer from "../containers/ToDoItemContainer";
 import IToDo from "../models/IToDo";
 
-interface IProps {
+/* interface IProps {
 	todos: Array<IToDo>;
 	addToDo: Function;
 	fetchToDos: React.EffectCallback;
-}
+} */
 
-export default function ToDoList({ addToDo, todos, fetchToDos }: IProps) {
+export default function ToDoList({ addToDo, todos, fetchToDos }) {
 	const [title, setTitle] = useState("");
 
 	useEffect(fetchToDos, []);
